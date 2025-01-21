@@ -1,0 +1,55 @@
+# The "reportMap" section is used to map the script names(keys) that you have given the "script configuration" details sheet 
+# It's acceptable for the keys(script names) and values to be the same if needed.
+# Example - France Rides Old(key): FigFranceRide(value)
+reportMap:
+    RSP_GB_Lift_Dash: RSP GB Lift Dash
+    Manual_Handled_NPI_method2_NPI_premier: Manual Handled NPI method2 NPI premier
+    
+# Provide your dashboard name along with the list of users for whom the Launchpad setup will be configured.
+dashboard:
+    Marketplace-Ops: ['mrajor'] 
+
+
+# Do not change this required for LP 
+reRunFailTaskInMinuts: 10
+resetLongRunningTaskInMinuts: 300
+sendMailIfFailed: 5 
+noLogTimeOutInMinuts: 40
+maxTaskPerSession: 2
+
+# Do not change this required for LP 
+Logs:
+    logDrive: '1JxaJELKHU1Oy2GwwuV9xmFD26BPB2SJL'
+    sampleLogFile: 'SampleLogs.xlsx'
+    logSheetName: 'Logs'
+    logFileDrive: '11UZ6o2KZ_dk6YMvFvRYcSAyHhe14WUVG'
+ 
+# Do not change this required for LP 
+QueryRunCondition:
+    Fresh Run all: 'F'
+    Run by UUID if a fresh run is available within a day: 'D1'
+    Run by UUID if a fresh run is available within a Week: 'D7'
+    Run All by UUID: 'D'
+
+# Do not change this required for LP 
+failCheck:
+    LastRunCheck: 'H6'
+    LastRequestHandledCheck: 'H6'
+    LastSuccessfullyCompletedDQRCheck: 'H6'
+    
+# Provide the details for each script, such as the filename, folder, and any other relevant information from your "script configuration" sheet below.
+
+Rapido Moto NPI:
+    CodeFile: 'RSP_GB_Lift_Dash.ipynb'
+    folder: '../Meehir/'
+    poc: ['mrajor@ext.uber.com']
+    isDocOutput: False
+    maxRunTimeInM : 60 
+
+    
+Testing:
+    CodeFile: 'Manual_Handled_NPI_method2_NPI_premier.ipynb'
+    folder: '../Meehir/' 
+    poc: ['mrajor@ext.uber.com']
+    isDocOutput: False
+    maxRunTimeInM : 60
