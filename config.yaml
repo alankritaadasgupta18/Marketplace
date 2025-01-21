@@ -39,7 +39,7 @@ failCheck:
     
 # Provide the details for each script, such as the filename, folder, and any other relevant information from your "script configuration" sheet below.
 
-Rapido Moto NPI:
+RSP GB Lift Dash:
     CodeFile: 'RSP_GB_Lift_Dash.ipynb'
     folder: '../Meehir/'
     poc: ['mrajor@ext.uber.com']
@@ -47,7 +47,7 @@ Rapido Moto NPI:
     maxRunTimeInM : 60 
 
     
-Testing:
+Manual Handled NPI method2 NPI premier:
     CodeFile: 'Manual_Handled_NPI_method2_NPI_premier.ipynb'
     folder: '../Meehir/' 
     poc: ['mrajor@ext.uber.com']
