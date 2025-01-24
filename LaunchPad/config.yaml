@@ -7,7 +7,7 @@ reportMap:
     
 # Provide your dashboard name along with the list of users for whom the Launchpad setup will be configured.
 dashboard:
-    Marketplace-Ops: ['mrajor'] 
+    Marketplace Ops: ['mrajor'] 
 
 
 # Do not change this required for LP 
