@@ -1580,7 +1580,8 @@ def postSchedulerToDqrRequest(preCheck, dashboard):
     status = 'Completed' if to_dqr else 'Failed'
     print(f'status: {status}')
     # parameters_json = html.unescape(json.dumps(parameters))
-    parameters_json = html.escape(parameters)
+    parameters_json = html.escape(json.dumps(parameters))
+    # parameters_json = html.escape(parameters)
     print("\n")
     print(f'json param:{parameters_json}')
     update_query = f"""
