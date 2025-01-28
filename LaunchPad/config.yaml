@@ -1,186 +1,55 @@
+# The "reportMap" section is used to map the script names(keys) that you have given the "script configuration" details sheet 
+# It's acceptable for the keys(script names) and values to be the same if needed.
+# Example - France Rides Old(key): FigFranceRide(value)
 reportMap:
-    France Rides Old: FigFranceRide
-    US Eats Newsletter: UsEatsNewslatter
-    US Rides Newsletter: UsRidesNewslatter
-    US Eats Ensemble: USEatsEnsembleNA
-    US Eats Ensemble City: USEatsEnsembleCt
-    Taiwan Eats: TaiwanEats
-    Canada Eats: CanadaEats
-    Japan Eats: JapanEats
-    Mexico Rides: MexicoRides
-    Australia Eats: AustraliaEats
-    Colombia Rides: ColombiaRides
-    Chile Rides: ChileRides
-    Asparagus DSU CP: AsparagusDSUCP
-    Sandia DSU CP: SandiaDSUCP
-    US Eats V2 : USEatsEnsembleNA
-    Testing: Testing
+    RSP_GB_Lift_Dash: RSP GB Lift Dash
+    Manual_Handled_NPI_method2_NPI_premier: Manual Handled NPI method2 NPI premier
     
-    
+# Provide your dashboard name along with the list of users for whom the Launchpad setup will be configured.
 dashboard:
-    GI-GSS: ['mnizam1', 'kshriv1', 'schopr6', 'vjayap', 'vpenme'] 
-    MI-GSS: ['bsharm55','msah1','jvali']
-    test: ['kshiva19']
+    Marketplace Ops: ['mrajor'] 
 
 
+# Do not change this required for LP 
 reRunFailTaskInMinuts: 10
 resetLongRunningTaskInMinuts: 300
 sendMailIfFailed: 5 
 noLogTimeOutInMinuts: 40
 maxTaskPerSession: 2
 
-
+# Do not change this required for LP 
 Logs:
     logDrive: '1JxaJELKHU1Oy2GwwuV9xmFD26BPB2SJL'
     sampleLogFile: 'SampleLogs.xlsx'
     logSheetName: 'Logs'
     logFileDrive: '11UZ6o2KZ_dk6YMvFvRYcSAyHhe14WUVG'
-
-failCheck:
-    LastRunCheck: 'H6'
-    LastRequestHandledCheck: 'H6'
-    LastSuccessfullyCompletedDQRCheck: 'H6'
-    
-    
+ 
+# Do not change this required for LP 
 QueryRunCondition:
     Fresh Run all: 'F'
     Run by UUID if a fresh run is available within a day: 'D1'
     Run by UUID if a fresh run is available within a Week: 'D7'
     Run All by UUID: 'D'
-    
 
-FigFranceRide:
-    CodeFile: 'France_Ride_t.ipynb'
-    folder: '../France Rides/' 
-    poc: ['mnizam1@ext.uber.com','kshriv1@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1MlxSz6h1VernW4yUWVmdQeNK0m_yGWfX
-    maxRunTimeInM : 60
+# Do not change this required for LP 
+failCheck:
+    LastRunCheck: 'H6'
+    LastRequestHandledCheck: 'H6'
+    LastSuccessfullyCompletedDQRCheck: 'H6'
     
-    
-UsEatsNewslatter:
-    CodeFile: 'Newsletter-LP.ipynb'
-    folder: '../US Eats GI Newsletter /' 
-    poc: ['mnizam1@ext.uber.com', 'kshriv1@ext.uber.com', 'schopr6@ext.uber.com', 'vjayap@ext.uber.com', 'vishnu.vijayakumar@uber.com','bilal.chaudhry@uber.com']
-    # poc: ['mnizam1@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1Lv0xMsOGHmqFLtK0qUb46PhNqrnEQ2Vk
-    maxRunTimeInM : 60
+# Provide the details for each script, such as the filename, folder, and any other relevant information from your "script configuration" sheet below.
 
-UsRidesNewslatter:
-    CodeFile: 'US_Rides_NL(Launchpad_compatible).ipynb'
-    folder: '../US_Rides_NL/' 
-    poc: ['kshriv1@ext.uber.com','mnizam1@ext.uber.com','schopr6@ext.uber.com','vishnu.vijayakumar@uber.com','bilal.chaudhry@uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1F44Pm3WYo1Ao6CqtRIi7i5CvHZhJcukM
-    maxRunTimeInM : 60
-    
-USEatsEnsembleNA:
-    CodeFile: 'US_Eats_Ensemble_V6_NA_LP.ipynb'
-    folder: '../US Eats Ensemble /' 
-    poc: ['mnizam1@ext.uber.com', 'vjayap@ext.uber.com', 'vishnu.vijayakumar@uber.com', 'schopr6@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1YcQmn46fPoPjNa4_vIkbtVMSl0i6pPNw
-    maxRunTimeInM : 60
-
-    
-USEatsEnsembleCt:
-    CodeFile: 'US_Eats_Ensemble_City_LP.ipynb'
-    folder: '../US Eats Ensemble/' 
-    poc: ['mnizam1@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1YcQmn46fPoPjNa4_vIkbtVMSl0i6pPNw
-    maxRunTimeInM : 60
-    
-TaiwanEats:
-    CodeFile: 'Taiwan_Eats_Modified_Versioning_LP.ipynb'
-    folder: '../Taiwan/' 
-    poc: ['vpenme@ext.uber.com','schopr6@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1glu11JO3yXweMSt4nyK8cmhCcj6eIxwZ
-    maxRunTimeInM : 60
-    
-CanadaEats:
-    CodeFile: 'ces_(get_Data)-ENDIVE_V3_TEST_LP.ipynb'
-    folder: '../Canada Eats DQR/' 
-    poc: ['kshriv1@ext.uber.com','mnizam1@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1iMZ3R-bPcRR9mm9xDs1rL_ZqZat3AL2g
-    
-JapanEats:
-    CodeFile: 'Japan_Eats_LP.ipynb'
-    folder: '../Japan Eats/' 
-    poc: ['vjayap@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1Q_4gMHMnvYJpVnklROSyrey88f_GmVkA
-    maxRunTimeInM : 60
-    
-MexicoRides:
-    CodeFile: 'mx_rides_cp_rebuilt_gss_LP.ipynb'
-    folder: '../Mexico_Rides/' 
-    poc: ['vjayap@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1UkFyM66hvht5kl2lqCI8JwnVIRme7-6s
-    maxRunTimeInM : 60
-    
-AustraliaEats:
-    CodeFile: 'Australia Eats - SSOT V2-LP.ipynb'
-    folder: '../Australia_Eats/' 
-    poc: ['vpenme@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1s4LEys_QC5-ZmQvlxO4c-mD5nCngOiYT
-    maxRunTimeInM : 60    
-    
-ColombiaRides:
-    CodeFile: 'Colombia Rides latest T-1.ipynb'
-    folder: '../Colombia_Rides/' 
-    poc: ['bsharm55@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1FasxJHfMH-oHcZOaH3n7L71d23ndh_1X
+RSP GB Lift Dash:
+    CodeFile: 'RSP_GB_Lift_Dash.ipynb'
+    folder: '../Meehir/'
+    poc: ['mrajor@ext.uber.com']
+    isDocOutput: False
     maxRunTimeInM : 60 
 
-ChileRides:
-    CodeFile: 'Chile Rides latest T-1.ipynb'
-    folder: '../Chile_Rides/' 
-    poc: ['bsharm55@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1cpoOJ7_8fT04SymTHcgvpIuCsYlGhTX7
-    maxRunTimeInM : 60 
-
-AsparagusDSUCP:
-    CodeFile: 'DSU CP Asparagus.ipynb'
-    folder: '../Asparagus_DSU_CP/' 
-    poc: ['bsharm55@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1f7Dn3mRE8cUZTWyLR-mHB43LatTmHXvL
-    maxRunTimeInM : 60
     
-SandiaDSUCP:
-    CodeFile: 'DSU CP Sandia.ipynb'
-    folder: '../Sandia_DSU_CP/' 
-    poc: ['bsharm55@ext.uber.com']
-    reporting: W1
-    isDocOutput: True
-    drive: 1aQI_QAyHMyG8ujOLrXnfAQR5hyye5ZzG
-    maxRunTimeInM : 60
-
-Testing:
-    CodeFile: 'testing.ipynb'
-    folder: '../testing/' 
-    poc: ['kshiva19@ext.uber.com']
-    reporting: W1
+Manual Handled NPI method2 NPI premier:
+    CodeFile: 'Manual_Handled_NPI_method2_NPI_premier.ipynb'
+    folder: '../Meehir/' 
+    poc: ['mrajor@ext.uber.com']
     isDocOutput: False
     maxRunTimeInM : 60
