@@ -451,8 +451,8 @@ def sendDqrMail(uploadFilePath,requestConfig, reportConfig , link,runConfig):
     subject = f"LaunchPad Update: Successful Execution of {requestConfig['dqr_name']} (Task ID: {requestConfig['task_id']})"
     # subject = uploadFilePath.split('/')[-1]
 
-    task_link = f"https://michelangelo-studio.uberinternal.com/session/b7620d47-d361-4b14-8cd5-4ae3a86c065f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/task/{requestConfig['task_id']}"
-    log_link = f"https://michelangelo-studio.uberinternal.com/session/b7620d47-d361-4b14-8cd5-4ae3a86c065f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/run/{runConfig['logger_id']}"
+    task_link = f"https://michelangelo-studio.uberinternal.com/session/110180d5-f2dc-46a0-9d43-b402e0cc634f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/task/{requestConfig['task_id']}"
+    log_link = f"https://michelangelo-studio.uberinternal.com/session/110180d5-f2dc-46a0-9d43-b402e0cc634f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/run/{runConfig['logger_id']}"
     slack_link = f"https://uber.slack.com/app_redirect?channel=launchpad_support"
 
     html1 = f"""\
@@ -502,8 +502,8 @@ def sendDqrMail_completion(requestConfig, reportConfig,runConfig):
     subject = f'LaunchPad Completion for the Script - {requestConfig["dqr_name"]} (Task id : {requestConfig["task_id"]})'
     # subject = f"LaunchPad Update: Successful Execution of {requestConfig['dqr_name']} (Task ID: {requestConfig['task_id']})"
 
-    task_link = f"https://michelangelo-studio.uberinternal.com/session/b7620d47-d361-4b14-8cd5-4ae3a86c065f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/task/{requestConfig['task_id']}"
-    log_link = f"https://michelangelo-studio.uberinternal.com/session/b7620d47-d361-4b14-8cd5-4ae3a86c065f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/run/{runConfig['logger_id']}"
+    task_link = f"https://michelangelo-studio.uberinternal.com/session/110180d5-f2dc-46a0-9d43-b402e0cc634f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/task/{requestConfig['task_id']}"
+    log_link = f"https://michelangelo-studio.uberinternal.com/session/110180d5-f2dc-46a0-9d43-b402e0cc634f/phoenix/dashboard/be175d71-779e-44eb-832e-b6cc1051ff24/run/{runConfig['logger_id']}"
     slack_link = f"https://uber.slack.com/app_redirect?channel=launchpad_support"
 
 
