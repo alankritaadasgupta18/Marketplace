@@ -1485,7 +1485,12 @@ def postSchedulerToDqrRequest(preCheck, dashboard):
     current_time = utc_now.strftime("%Y-%m-%d %H:%M:%S")
     partition_id_start, partition_id_end = getThisWeekStartEnd()
 
-    parameters = json.loads(preCheck['parameters'])
+    # parameters = json.loads(preCheck['parameters'])
+    if preCheck['parameters'] is None:
+        parameters = {}  # Assign an empty dictionary to avoid errors
+    else:
+        parameters = json.loads(preCheck['parameters'])
+
     dashboard_name = dashboard.upper().replace('_', '-') if dashboard in ('gi_gss', 'mi_gss') else dashboard
     
     # Get dashboard ID
@@ -1499,81 +1504,83 @@ def postSchedulerToDqrRequest(preCheck, dashboard):
     # Get parameter details
     param_keys = list(parameters.keys())
     print(f'param keys: {param_keys}')
-    query = f"""
-        SELECT variable_name, exec_type, column_name
-        FROM launchpad_dim_parameter_dev
-        WHERE variable_name IN ({', '.join(f"'{key}'" for key in param_keys)}) AND dashboard_id = {dashboard_id} AND form_name='script_scheduler'
-    """
+    if param_keys:
+        query = f"""
+            SELECT variable_name, exec_type, column_name
+            FROM launchpad_dim_parameter_dev
+            WHERE variable_name IN ({', '.join(f"'{key}'" for key in param_keys)}) AND dashboard_id = {dashboard_id} AND form_name='script_scheduler'
+        """
+    
+        query_result = runBQuery(query,True)
+        print(query_result)
+        param_type = {
+            row.variable_name: [row.exec_type, row.column_name]
+            for row in runBQuery(query, True).itertuples(index=False)
+        }
+        # param_type = {
+        #     row.short_name: [row.exec_type, row.variable_name if row.variable_name else None, row.column_name]
+        #     for row in runBQuery(query, True).itertuples(index=False)
+        # }
+        # Separate parameters by exec_type
+        text_params = {k: v for k, v in parameters.items() if param_type.get(k, [None])[0] == 'text'}
+        qb_report_params = {k: v for k, v in parameters.items() if param_type.get(k, [None])[0] == 'qb_report'}
+        print(f'text_params = {text_params}')
+        print(f'qb_report_params = {qb_report_params}')
+        # Process text parameters with error handling
+        text_dict = {}
+        for k, v in text_params.items():
+            try:
+                # Since the value is plain text, unescape it directly
+                text_dict[k] = html.unescape(v)
+            except Exception as e:
+                print(f"Error processing key '{k}': {v}. Error: {e}")
+        print("Decoded Text Parameters:", text_dict)
 
-    query_result = runBQuery(query,True)
-    print(query_result)
-    param_type = {
-        row.variable_name: [row.exec_type, row.column_name]
-        for row in runBQuery(query, True).itertuples(index=False)
-    }
-    # param_type = {
-    #     row.short_name: [row.exec_type, row.variable_name if row.variable_name else None, row.column_name]
-    #     for row in runBQuery(query, True).itertuples(index=False)
-    # }
-    # Separate parameters by exec_type
-    text_params = {k: v for k, v in parameters.items() if param_type.get(k, [None])[0] == 'text'}
-    qb_report_params = {k: v for k, v in parameters.items() if param_type.get(k, [None])[0] == 'qb_report'}
-    print(f'text_params = {text_params}')
-    print(f'qb_report_params = {qb_report_params}')
-    # Process text parameters with error handling
-    text_dict = {}
-    for k, v in text_params.items():
-        try:
-            # Since the value is plain text, unescape it directly
-            text_dict[k] = html.unescape(v)
-        except Exception as e:
-            print(f"Error processing key '{k}': {v}. Error: {e}")
-    print("Decoded Text Parameters:", text_dict)
-
-
+    runId=''
 
     # Process QB report parameters
     to_dqr = True
-    for param_key, value in qb_report_params.items():
-        if value not in ('', 'None', None):
-            # Update pre-check status
-            update_query = f"""
-                UPDATE launchpad_schedular_on_pre_check_dev
-                SET updated_at = '{current_time}', run_status = 'Running'
-                WHERE pre_check_id = {preCheck['pre_check_id']}
-            """
-            runBQuery(update_query, False)
-
-            variable_name = param_key
-            store = param_key
-            if dashboard_id == 1:
-                parameters_qb = {'partition_id_start': partition_id_start, 'partition_id_end': partition_id_end}
-                # for now keeping this as the runId column exister=d
-                runIds = getData(preCheck['getRunId_querybuilder'], parameters =parameters_qb)
-                runId = runIds['partition_id'].to_list()
-                if len(runId)!=0:
-                    runId = ', '.join(runId)
+    if param_keys and qb_report_params:
+        for param_key, value in qb_report_params.items():
+            if value not in ('', 'None', None):
+                # Update pre-check status
+                update_query = f"""
+                    UPDATE launchpad_schedular_on_pre_check_dev
+                    SET updated_at = '{current_time}', run_status = 'Running'
+                    WHERE pre_check_id = {preCheck['pre_check_id']}
+                """
+                runBQuery(update_query, False)
+    
+                variable_name = param_key
+                store = param_key
+                if dashboard_id == 1:
+                    parameters_qb = {'partition_id_start': partition_id_start, 'partition_id_end': partition_id_end}
+                    # for now keeping this as the runId column exister=d
+                    runIds = getData(preCheck['getRunId_querybuilder'], parameters =parameters_qb)
+                    runId = runIds['partition_id'].to_list()
+                    if len(runId)!=0:
+                        runId = ', '.join(runId)
+                    else:
+                        toDqr = False
+                        runId = ''
+                    # we can use the below one to get the parameters format 
+                    variable_data = getData(value, parameters=parameters_qb)
+                    print(variable_data)
                 else:
-                    toDqr = False
-                    runId = ''
-                # we can use the below one to get the parameters format 
-                variable_data = getData(value, parameters=parameters_qb)
-                print(variable_data)
-            else:
-                runId=''
-                variable_data = getData(value)
-
-            # Convert the first column to a list and join as comma-separated values
-            column_name = param_type.get(param_key, [None])[1]
-            first_column_values = variable_data[column_name].to_list()
-            variable_name = ', '.join(map(str, first_column_values)) if first_column_values else ''
-
-            # Check if there are any values to proceed
-            if not first_column_values:
-                to_dqr = False
-
-            # Store results in parameters dictionary
-            parameters[store] = variable_name
+                    runId=''
+                    variable_data = getData(value)
+    
+                # Convert the first column to a list and join as comma-separated values
+                column_name = param_type.get(param_key, [None])[1]
+                first_column_values = variable_data[column_name].to_list()
+                variable_name = ', '.join(map(str, first_column_values)) if first_column_values else ''
+    
+                # Check if there are any values to proceed
+                if not first_column_values:
+                    to_dqr = False
+    
+                # Store results in parameters dictionary
+                parameters[store] = variable_name
 
 
     # Update the pre-check status based on success or failure
