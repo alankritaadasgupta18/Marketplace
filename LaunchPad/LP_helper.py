@@ -1608,7 +1608,7 @@ def postSchedulerToDqrRequest(preCheck, dashboard):
         print(parameters)
         postReportRequest(
             schedular_task['dqr_name'], schedular_task['run_on'], schedular_task['run_condition'],
-            schedular_task['query_run_condition'], schedular_task['email_address'], runId, dashboard, parameters
+            schedular_task['query_run_condition'], schedular_task['email_address'], runId, dashboard_name, parameters
         )
 
     return to_dqr
